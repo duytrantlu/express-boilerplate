@@ -63,15 +63,15 @@ app.post('/api/change-email', (req, res) => {
   const user = [
     {
       _id:1,
-      username: 'admin',
+      username: 'client1',
       password: 'password',
       email: 'admin@example.com',
     },
     {
       _id:2,
-      username: 'cs1',
+      username: 'client2',
       password: 'password',
-      email: 'cs1@example.com',
+      email:"client2@gmail.com"
     },
     {
       _id:3,
@@ -80,22 +80,103 @@ app.post('/api/change-email', (req, res) => {
       email: 'test@example.com',
     }
   ];
-  if (req.body.confirmEmail === req.body.newEmail) {
-    user.map(v => {
-      if(v.oldEmail === req.body.oldEmail) {
-        v.email = req.data.email;
+    user.forEach(u => {
+      if(u.email === req.body.oldEmail) {
+        u.email = req.body.newEmail;
+        return res.json({
+          data: u,
+          statusCode: 202
+        });
       }
-      return v;
     });
-    return res.json({
-      status: 200,
-      data: user,
-    });
-  }
-  return res.json({
-    status: 400,
-    data: user,
+    
+  res.json({
+    data: {},
+    statusCode: 404
   });
+});
+
+app.post('/api/clients', (req, res) => {
+  const clients = [
+    {
+      id: 1,
+      username: "client1",
+    },
+    {
+      id: 2,
+      username: "client2",
+    },
+    {
+      id: 3,
+      username: "client3",
+    },
+    {
+      id: 4,
+      username: "client4",
+    },
+    {
+      id: 5,
+      username: "client5",
+    },
+    {
+      id: 6,
+      username: "client6",
+    }
+  ];
+  const data = req.body;
+  clients.forEach(value=> {
+    if (value.username === data.user) {
+      return res.json({status: 200})
+    }
+  })
+  res.json({status: 404});
+});
+
+app.get('/api/user/:username', (req, res) => {
+  const user = req.params;
+  const clients = [
+    {
+      id: 1,
+      username:"client1",
+      email:"client1@gmail.com"
+    },
+    {
+      id: 2,
+      username:"client2",
+      email:"client2@gmail.com"
+    },
+    {
+      id: 3,
+      username:"client3",
+      email:"client3@gmail.com"
+    },
+    {
+      id: 4,
+      username:"client4",
+      email:"client4@gmail.com"
+    }
+  ];
+  clients.forEach( client=> {
+    if(client.username === user.username) {
+      return res.json({
+        email: client.email,
+        status: 200
+      });
+    }
+  });
+  res.json({
+    email: '',
+    status: 404
+  })
+});
+
+app.post('api/user/update', (req, res)=>{
+  console.log("=====req==", req);
+  const data = req.body;
+  console.log("===data==", data);
+  res.json({
+    message: "Update user's email succeed"
+  }).sendStatus(400);
 })
 
 // ex. using 'node-fetch' to call JSON REST API
