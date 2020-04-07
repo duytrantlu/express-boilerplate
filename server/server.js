@@ -62,22 +62,24 @@ app.get('/api/deposit', (req, res) => {
 app.post('/api/change-email', (req, res) => {
   const user = [
     {
-      _id:1,
-      username: 'client1',
-      password: 'password',
-      email: 'admin@example.com',
+      id: 1,
+      username:"client1",
+      email:"client1@gmail.com"
     },
     {
-      _id:2,
-      username: 'client2',
-      password: 'password',
+      id: 2,
+      username:"client2",
       email:"client2@gmail.com"
     },
     {
-      _id:3,
-      username: 'test',
-      password: 'password',
-      email: 'test@example.com',
+      id: 3,
+      username:"client3",
+      email:"client3@gmail.com"
+    },
+    {
+      id: 4,
+      username:"client4",
+      email:"client4@gmail.com"
     }
   ];
     user.forEach(u => {
@@ -170,14 +172,6 @@ app.get('/api/user/:username', (req, res) => {
   })
 });
 
-app.post('api/user/update', (req, res)=>{
-  console.log("=====req==", req);
-  const data = req.body;
-  console.log("===data==", data);
-  res.json({
-    message: "Update user's email succeed"
-  }).sendStatus(400);
-})
 
 // ex. using 'node-fetch' to call JSON REST API
 /*
